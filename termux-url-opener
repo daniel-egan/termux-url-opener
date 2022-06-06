@@ -22,7 +22,6 @@ if [ "$n" = "a" ]; then
   echo "b. Music"
   read x
   if [ "$x" = "a" ]; then
-    echo "asdf"
 	  cd ~/storage/music/Podcasts/
 	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
   else

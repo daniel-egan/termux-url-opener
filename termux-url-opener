@@ -22,15 +22,22 @@ if [ "$n" = "a" ]; then
   echo "b. Music"
   read x
   if [ "$x" = "a" ]; then
+    echo "asdf"
 	  cd ~/storage/music/Podcasts/
 	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
   else
     cd ~/storage/music/Music/
 	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-fi
+  fi
 else
+
+if [ "$n" = "b" ]; then
 	cd ~/storage/movies/Videos/
 	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+else
+  cd ~/bin
+	./termux-url-opener $url
+fi
 fi
 fi
 termux-wake-unlock

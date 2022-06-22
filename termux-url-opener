@@ -33,7 +33,7 @@ else
 
 if [ "$n" = "b" ]; then
 	cd ~/storage/movies/Videos/
-	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs
 else
   cd ~/bin
 	./termux-url-opener $url

@@ -4,6 +4,7 @@ BLUE='\e[34m'
 NC='\e[0m'
 
 pkg install python ffmpeg
+pkg install python-numpy -y
 pip install -U yt-dlp
 # Need to add auto editor here
 mkdir ~/storage/music/Podcasts/

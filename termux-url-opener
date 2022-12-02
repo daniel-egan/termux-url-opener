@@ -22,7 +22,6 @@ audioMusic () {
   title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
   cd ~/storage/music/Music/
   yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-  fi
 }
 
 video () {

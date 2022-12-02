@@ -10,19 +10,18 @@ update () {
   pkg autoclean
 }
 
-audio () {
-  echo "a. Podcast"
-  echo "b. Music"
-  read x
+audioPodcast () {
   title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
-  if [ "$x" = "a" ]; then
-	  cd ~/storage/music/Podcasts/
-	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.m4a' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-    auto-editor $title --margin 0.2sec --no-open
-    rm $title
-  else
-    cd ~/storage/music/Music/
-	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+  cd ~/storage/music/Podcasts/
+  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.m4a' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+  auto-editor $title --margin 0.2sec --no-open
+  rm $title
+}
+
+audioMusic () {
+  title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
+  cd ~/storage/music/Music/
+  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
   fi
 }
 
@@ -45,8 +44,20 @@ whatUpdate () {
     update
   else
   if [ "$m" = "a" ]; then
-    update
-    audio
+    echo "a. Podcast"
+    echo "b. Music"
+    read x
+    if [ "$x" = "a" ]; then
+      update
+      audioPodcast
+    else
+    if [ "$x" = "b" ]; then
+      update
+      audioMusic
+    else
+      :
+    fi
+    fi
   else
   if [ "$m" = "b" ]; then
     update
@@ -73,7 +84,18 @@ if [ "$n" = '1' ]; then
 else
 
 if [ "$n" = "a" ]; then
-  audio
+    echo "a. Podcast"
+    echo "b. Music"
+    read x
+    if [ "$x" = "a" ]; then
+      audioPodcast
+    else
+    if [ "$x" = "b" ]; then
+      audioMusic
+    else
+      :
+    fi
+    fi
 else
 
 if [ "$n" = "b" ]; then

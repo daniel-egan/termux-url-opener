@@ -1,5 +1,63 @@
+# Currently auto-editor doesn't work
+#! /bin/bash
 termux-wake-lock
 clear
+
+update () {
+  pkg upgrade -y
+  python -m pip install --upgrade pip
+  pip install -U yt-dlp
+  pkg autoclean
+}
+
+audio () {
+  echo "a. Podcast"
+  echo "b. Music"
+  read x
+  title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
+  if [ "$x" = "a" ]; then
+	  cd ~/storage/music/Podcasts/
+	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.m4a' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+    auto-editor $title --margin 0.2sec --no-open
+    rm $title
+  else
+    cd ~/storage/music/Music/
+	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
+  fi
+}
+
+video () {
+  title=`yt-dlp --print filename -o "%(title)s" $url --restrict-filenames`
+  cd ~/storage/movies/Videos/
+	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs
+  auto-editor $title --margin 0.2sec --no-open
+  rm $title
+}
+
+
+
+whatUpdate () {
+  echo "1. Only Update"
+  echo "a. Update and Audio"
+  echo "b. Update and Video"
+  read m
+  if [ "$m" = '1' ]; then
+    update
+  else
+  if [ "$m" = "a" ]; then
+    update
+    audio
+  else
+  if [ "$m" = "b" ]; then
+    update
+    video
+  else
+    cd ~/bin
+  	./termux-url-opener $url
+  fi
+  fi
+  fi
+}
 
 url=$1
 rate=150K
@@ -11,33 +69,15 @@ echo "b. Video"
 read n
 
 if [ "$n" = '1' ]; then
-	pkg upgrade -y
-	python -m pip install --upgrade pip
-	pip install -U yt-dlp
-	pkg autoclean
-	cd ~/bin
-	./termux-url-opener $url
+	whatUpdate
 else
 
 if [ "$n" = "a" ]; then
-  echo "a. Podcast"
-  echo "b. Music"
-  read x
-  if [ "$x" = "a" ]; then
-	  cd ~/storage/music/Podcasts/
-	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-  else
-    cd ~/storage/music/Music/
-	  yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-  fi
+  audio
 else
 
 if [ "$n" = "b" ]; then
-	cd ~/storage/movies/Videos/
-	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs
-else
-  cd ~/bin
-	./termux-url-opener $url
+	video
 fi
 fi
 fi

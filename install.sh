@@ -5,9 +5,9 @@ NC='\e[0m'
 
 pkg install python ffmpeg
 pip install -U yt-dlp
-# Need to add auto editor here
+pip install auto-editor
 mkdir ~/storage/music/Podcasts/
 mkdir ~/storage/music/Music/
 mkdir ~/storage/movies/Videos/
 
-echo -e "${BLUE}Congratulations!!! Your setup is complete.${NC}\n\n"
+echo -e "${BLUE}Setup is complete.${NC}\n\n"

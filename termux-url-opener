@@ -1,4 +1,3 @@
-# Currently auto-editor doesn't work
 #! /bin/bash
 termux-wake-lock
 clear
@@ -14,8 +13,6 @@ audioPodcast () {
   title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
   cd ~/storage/music/Podcasts/
   yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.m4a' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
-  auto-editor $title --margin 0.2sec --no-open
-  rm $title
 }
 
 audioMusic () {
@@ -28,8 +25,6 @@ video () {
   title=`yt-dlp --print filename -o "%(title)s" $url --restrict-filenames`
   cd ~/storage/movies/Videos/
 	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs
-  auto-editor $title --margin 0.2sec --no-open
-  rm $title
 }
 
 

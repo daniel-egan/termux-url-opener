@@ -27,7 +27,11 @@ video () {
 	yt-dlp -f "bv+ba/b" $url -o '%(title)s.%(ext)s' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs
 }
 
-
+videoSilenceRemove () {
+  title=`yt-dlp --print filename -o "%(title)s" $url --restrict-filenames`
+  auto-editor $url --my-ffmpeg --ffmpeg-location /usr/bin/ffmpeg --no-open --margin 0.2sec -o $title --yt-dlp-extras "--sponsorblock-remove all --throttled-rate 150K --concurrent-fragments 10 --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs"
+  find  . -name 'http*' -exec rm {} \;
+}
 
 whatUpdate () {
   echo "1. Only Update"

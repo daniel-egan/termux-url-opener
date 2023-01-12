@@ -5,6 +5,8 @@ NC='\e[0m'
 
 pkg install python ffmpeg -y
 pip install -U yt-dlp -y
+pkg install python-numpy -y
+pip install auto-editor
 mkdir ~/storage/music/Podcasts/
 mkdir ~/storage/music/Music/
 mkdir ~/storage/movies/Videos/

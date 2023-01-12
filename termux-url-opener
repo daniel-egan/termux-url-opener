@@ -6,6 +6,7 @@ update () {
   pkg upgrade -y
   python -m pip install --upgrade pip
   pip install -U yt-dlp
+  pip install auto-editor --upgrade
   pkg autoclean
 }
 

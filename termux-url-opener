@@ -30,7 +30,8 @@ video () {
 
 videoSilenceRemove () {
   title=`yt-dlp --print filename -o "%(title)s" $url --restrict-filenames`
-  auto-editor $url --my-ffmpeg --ffmpeg-location /usr/bin/ffmpeg --no-open --margin 0.2sec -o $title --yt-dlp-extras "--sponsorblock-remove all --throttled-rate 150K --concurrent-fragments 10 --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs"
+  cd ~/storage/movies/Videos/
+  auto-editor $url --my-ffmpeg --ffmpeg-location /data/data/com.termux/files/usr/bin/ffmpeg --no-open --margin 0.2sec -o $title --yt-dlp-extras "--sponsorblock-remove all --throttled-rate 150K --concurrent-fragments 10 --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs"
   find  . -name 'http*' -exec rm {} \;
 }
 
@@ -59,8 +60,20 @@ whatUpdate () {
     fi
   else
   if [ "$m" = "b" ]; then
-    update
-    video
+    echo "a. Video"
+    echo "b. Video Removed Silence"
+    read x
+    if [ "$x" = "a" ]; then
+      update
+      video
+    else
+    if [ "$x" = "b" ]; then
+      update
+      videoSilenceRemove
+    else
+      :
+    fi
+    fi
   else
     cd ~/bin
   	./termux-url-opener $url
@@ -98,7 +111,18 @@ if [ "$n" = "a" ]; then
 else
 
 if [ "$n" = "b" ]; then
-	video
+    echo "a. Video"
+    echo "b. Video Removed Silence"
+    read x
+    if [ "$x" = "a" ]; then
+      video
+    else
+    if [ "$x" = "b" ]; then
+      videoSilenceRemove
+    else
+      :
+    fi
+    fi
 fi
 fi
 fi

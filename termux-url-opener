@@ -16,6 +16,13 @@ audioPodcast () {
   yt-dlp -f 'ba' -x --audio-format m4a $url -o '%(title)s.m4a' --sponsorblock-remove all --throttled-rate $rate --concurrent-fragments $fragments --retries infinite --embed-thumbnail
 }
 
+podcastSilenceRemove () {
+  title=`yt-dlp --print filename -o "%(title)s" $url --restrict-filenames`
+  cd ~/storage/music/Podcasts/
+  auto-editor $url --download-format "ba" --my-ffmpeg --ffmpeg-location /data/data/com.termux/files/usr/bin/ffmpeg --no-open --margin 0.2sec -o $title --yt-dlp-extras "--sponsorblock-remove all --throttled-rate 150K --concurrent-fragments 10 --retries infinite --embed-thumbnail --write-subs --write-auto-subs --embed-subs --compat-options no-keep-subs"
+  find  . -name 'http*' -exec rm {} \;
+}
+
 audioMusic () {
   title=`yt-dlp --print filename -o "%(title)s.m4a" $url --restrict-filenames`
   cd ~/storage/music/Music/
